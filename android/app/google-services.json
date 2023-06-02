@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1092994237147",
+    "project_id": "fotogram-clone",
+    "storage_bucket": "fotogram-clone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1092994237147:android:8a49a9855f81c1389a02fe",
+        "android_client_info": {
+          "package_name": "com.example.igcloneapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCg_oO7bojKT3vjpVken79dM1gYG9E_PZ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

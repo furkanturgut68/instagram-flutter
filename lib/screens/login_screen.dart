@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:igcloneapp/resources/auth_methods.dart';
 import 'package:igcloneapp/utils/colors.dart';
+import 'package:igcloneapp/utils/utils.dart';
 import 'package:igcloneapp/widgets/text_field_input.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -13,6 +15,24 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isLoading = false;
+
+  void loginUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String res = await AuthMethods().loginUser(
+        emails: _emailController.text, passwords: _passwordController.text);
+    print(res);
+
+    if (res == "succes") {
+    } else {
+      showSnackBar(res, context);
+    }
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   @override
   void dispose() {
@@ -59,8 +79,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 24,
               ),
               InkWell(
+                onTap: loginUser,
                 child: Container(
-                  child: Text("Log in"),
+                  child: _isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: primaryColor,
+                          ),
+                        )
+                      : Text("Log in"),
                   width: double.infinity,
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 12),

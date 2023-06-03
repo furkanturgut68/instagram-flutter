@@ -1,8 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:igcloneapp/resources/auth_methods.dart';
 import 'package:igcloneapp/utils/colors.dart';
+import 'package:igcloneapp/utils/utils.dart';
 import 'package:igcloneapp/widgets/text_field_input.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -16,6 +19,14 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _bioController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
+  Uint8List? _image;
+
+  void selectedImage() async{
+    Uint8List im = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = im;
+    });
+  }
 
   @override
   void dispose() {
@@ -40,20 +51,24 @@ class _SignupScreenState extends State<SignupScreen> {
                 child: Container(),
                 flex: 2,
               ),
-              
+
               const SizedBox(
                 height: 64,
               ),
               Stack(
                 children: [
-                  const CircleAvatar(
+                  _image !=null? CircleAvatar(
+                    radius: 64,
+                    backgroundImage: MemoryImage(_image!),
+                  )
+                  : const CircleAvatar(
                     radius: 64,
                     backgroundImage: NetworkImage(
-                        'https://plus.unsplash.com/premium_photo-1675314768307-cf9522b669f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyfHx8ZW58MHx8fHx8&auto=format&fit=crop&w=900&q=60'),
+                        'https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png'),
                   ),
                   Positioned(
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: selectedImage,
                       icon: const Icon(
                         Icons.add_a_photo,
                       ),
@@ -100,7 +115,9 @@ class _SignupScreenState extends State<SignupScreen> {
                       email: _emailController.text,
                       password: _passwordController.text,
                       username: _usernameController.text,
-                      bio: _bioController.text);
+                      bio: _bioController.text,
+                      fileUrl: _image!);
+                      
                 },
                 child: Container(
                   child: Text("Sign up"),

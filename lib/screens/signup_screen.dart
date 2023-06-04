@@ -2,10 +2,15 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:igcloneapp/resources/auth_methods.dart';
+import 'package:igcloneapp/screens/login_screen.dart';
 import 'package:igcloneapp/utils/colors.dart';
 import 'package:igcloneapp/utils/utils.dart';
 import 'package:igcloneapp/widgets/text_field_input.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../responsive/mobile_screen_layout.dart';
+import '../responsive/responsive_layout.dart';
+import '../responsive/web_screen_layout.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -44,6 +49,12 @@ class _SignupScreenState extends State<SignupScreen> {
 
     if (res != "succes") {
       showSnackBar(res, context);
+    } else {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => const ResponsiveLayout(
+            web_screen_layout: WebLayout(),
+            mobile_screen_layout: MobileLayout()),
+      ));
     }
     setState(() {
       _isLoading = false;
@@ -57,6 +68,12 @@ class _SignupScreenState extends State<SignupScreen> {
     _passwordController.dispose();
     _bioController.dispose();
     _usernameController.dispose();
+  }
+
+  void navigateToLogin() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const LoginScreen(),
+    ));
   }
 
   @override
@@ -167,10 +184,10 @@ class _SignupScreenState extends State<SignupScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 8),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: navigateToLogin,
                     child: Container(
                       child: const Text(
-                        "Sign up.",
+                        "Login.",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 8),

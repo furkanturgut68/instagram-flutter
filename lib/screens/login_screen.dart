@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:igcloneapp/resources/auth_methods.dart';
+import 'package:igcloneapp/screens/signup_screen.dart';
+
 import 'package:igcloneapp/utils/colors.dart';
 import 'package:igcloneapp/utils/utils.dart';
 import 'package:igcloneapp/widgets/text_field_input.dart';
+
+import '../responsive/mobile_screen_layout.dart';
+import '../responsive/responsive_layout.dart';
+import '../responsive/web_screen_layout.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -26,12 +32,24 @@ class _LoginScreenState extends State<LoginScreen> {
     print(res);
 
     if (res == "succes") {
+      // login to home screen!
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => const ResponsiveLayout(
+            web_screen_layout: WebLayout(),
+            mobile_screen_layout: MobileLayout()),
+      ));
     } else {
       showSnackBar(res, context);
     }
     setState(() {
       _isLoading = false;
     });
+  }
+
+  void navigateToSignUp() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const SignupScreen(),
+    ));
   }
 
   @override
@@ -114,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 8),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: navigateToSignUp,
                     child: Container(
                       child: const Text(
                         "Sign up.",
